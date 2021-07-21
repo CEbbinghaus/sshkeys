@@ -3,15 +3,16 @@ Host github.com
  HostName github.com
  User CEbbi
  AddKeysToAgent yes
- IdentityFile %d/.ssh/github_rsa
+ IdentityFile %d/.ssh/github
 
 # GitLab
 Host gitlab.com
  HostName gitlab.com
  User CEbbi
  AddKeysToAgent yes
- IdentityFile %d/.ssh/gitlab_rsa
+ IdentityFile %d/.ssh/gitlab
 
+# Matthew's PC
 Host anton
  HostName 119.17.133.230
  User username
