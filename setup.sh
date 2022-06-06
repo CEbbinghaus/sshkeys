@@ -4,7 +4,7 @@ printf "\nGenerating Default Keyfiles\n\n"
 
 declare -a keys
 
-keys=("github" "gitlab" "wildmouse")
+keys=("github" "gitlab")
 
 for key in "${keys[@]}"; do
 
