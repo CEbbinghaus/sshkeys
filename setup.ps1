@@ -2,11 +2,16 @@
 
 Write-Output "Generating Default Keyfiles..."
 
-$keys=("github", "gitlab")
+$keys=("github", "gitlab", "unraid")
 
 foreach($key in $keys){
 
-     &"$HOME\.ssh\genkey.ps1" "$key" --Force
+     if(Test-Path "$HOME\.ssh\$key"){
+          Write-Output "Skipping $key"
+          continue
+     }
+
+     &"$HOME\.ssh\genkey.ps1" "$key" -Force
      
 	if($?){
           Write-Output "Generated $key Key"
@@ -15,9 +20,13 @@ foreach($key in $keys){
      }
 }
 
-Write-Output "Generating GPG key"
+$key = gpg --list-secret-keys --keyid-format=long
 
-Write-Output @'
+if(-not $key) {
+
+     Write-Output "Generating GPG key"
+
+     Write-Output @'
 %no-protection
 Key-Type: RSA
 Key-Length: 4096
@@ -28,7 +37,10 @@ Name-Email: git@cebbinghaus.com
 Expire-Date: 0
 '@ | Set-Content key -Encoding Ascii
 
-gpg --batch --gen-key key *> $null
+     gpg --batch --gen-key key *> $null
 
-Write-Output "Finished Generating GPG Key"
-Remove-Item key
+     Write-Output "Finished Generating GPG Key"
+     Remove-Item key
+}else {
+     Write-Output "Skipping GPG Key"
+}
