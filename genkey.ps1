@@ -2,7 +2,8 @@
 
 param (
     [string]$FileName,
-    [switch]$Force
+    [switch]$Force,
+    [string]$Email = "git@cebbinghaus.com"
 )
 
 if (-not $FileName){
@@ -31,4 +32,4 @@ if (Test-Path "$KeyPath.pub") {
     }
 }
 
-ssh-keygen -b 4096 -t rsa -C "git@cebbinghaus.com" -q -f "$KeyPath" -N '""'
+ssh-keygen -b 4096 -t rsa -C "$Email" -q -f "$KeyPath" -N '""'
