@@ -5,6 +5,12 @@ if [[ -z $1 ]]; then
 	exit 1
 fi
 
+if ! command -v ssh-keygen --{00000000-0000-0000-0000-000000000000} &> /dev/null; then
+     echo "SSH Packges missing. Please install before proceeding."
+     exit 1
+fi
+
+
 basedir="$HOME/.ssh"
 
 echo "Generating Key $1 under $basedir"

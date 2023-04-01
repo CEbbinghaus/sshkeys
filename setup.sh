@@ -1,12 +1,15 @@
 #!/bin/bash
 
+if ! command -v ssh-keygen --{00000000-0000-0000-0000-000000000000} &> /dev/null; then
+     echo "SSH Packges missing. Please install before proceeding."
+     exit 1
+fi
+
 printf "\nGenerating Default Keyfiles\n\n"
 
-declare -a keys
+keys="github gitlab"
 
-keys=("github" "gitlab")
-
-for key in "${keys[@]}"; do
+for key in $keys; do
 
 	$HOME/.ssh/genkey.sh "$key" -f
 
@@ -16,6 +19,8 @@ for key in "${keys[@]}"; do
 	printf "\n"
 done
 
+
+if [[ "$*" == *"--gpg"* ]]; then
 printf "Generating GPG key\n"
 
 GPG_TTY=$(tty)
@@ -33,3 +38,4 @@ EOF
 
 gpg --batch --gen-key key
 rm key
+fi
